@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import binascii
+import operator
 import struct
-import types
 
 try:
     from collections.abc import Buffer  # type: ignore[attr-defined]
@@ -54,25 +54,18 @@ class tai:
     def pack(self) -> bytes:
         return self._struct.pack(self.sec)
 
-    def __eq__(self, other):
-        if isinstance(other, tai): return self.sec == other.sec
+    def _tuple(self) -> tuple[int]:
+        return (self._sec,)
+
+    def _compare(self, op, other) -> bool:
+        if type(other) is type(self): return op(self._tuple(), other._tuple())
         return NotImplemented
 
-    def __le__(self, other):
-        if isinstance(other, tai): return self.sec <= other.sec
-        return NotImplemented
-
-    def __lt__(self, other):
-        if isinstance(other, tai): return self.sec < other.sec
-        return NotImplemented
-
-    def __ge__(self, other):
-        if isinstance(other, tai): return self.sec >= other.sec
-        return NotImplemented
-
-    def __gt__(self, other):
-        if isinstance(other, tai): return self.sec > other.sec
-        return NotImplemented
+    def __eq__(self, other): return self._compare(operator.eq, other)
+    def __ge__(self, other): return self._compare(operator.ge, other)
+    def __gt__(self, other): return self._compare(operator.gt, other)
+    def __le__(self, other): return self._compare(operator.le, other)
+    def __lt__(self, other): return self._compare(operator.lt, other)
 
     def __float__(self):
         return float(self.sec)
@@ -137,30 +130,20 @@ class tain:
     def pack(self) -> bytes:
         return self._struct.pack(self.sec, self.nano)
 
-    def __eq__(self, other):
-        if isinstance(other, tain):     return (self.sec, self.nano) == (other.sec, other.nano)
-        if isinstance(other, tai):      return (self.sec, self.nano) == (other.sec, 0)
+    def _tuple(self) -> tuple[int, int]:
+        return (self._sec, self._nano)
+
+    def _compare(self, op, other) -> bool:
+        typ = type(other)
+        if typ is type(self): return op(self._tuple(), other._tuple())
+        if typ is tai: return op(self._tuple(), (*other._tuple(), 0))
         return NotImplemented
 
-    def __le__(self, other):
-        if isinstance(other, tain):     return (self.sec, self.nano) <= (other.sec, other.nano)
-        if isinstance(other, tai):      return (self.sec, self.nano) <= (other.sec, 0)
-        return NotImplemented
-
-    def __lt__(self, other):
-        if isinstance(other, tain):     return (self.sec, self.nano) < (other.sec, other.nano)
-        if isinstance(other, tai):      return (self.sec, self.nano) < (other.sec, 0)
-        return NotImplemented
-
-    def __ge__(self, other):
-        if isinstance(other, tain):     return (self.sec, self.nano) >= (other.sec, other.nano)
-        if isinstance(other, tai):      return (self.sec, self.nano) >= (other.sec, 0)
-        return NotImplemented
-
-    def __gt__(self, other):
-        if isinstance(other, tain):     return (self.sec, self.nano) > (other.sec, other.nano)
-        if isinstance(other, tai):      return (self.sec, self.nano) > (other.sec, 0)
-        return NotImplemented
+    def __eq__(self, other): return self._compare(operator.eq, other)
+    def __ge__(self, other): return self._compare(operator.ge, other)
+    def __gt__(self, other): return self._compare(operator.gt, other)
+    def __le__(self, other): return self._compare(operator.le, other)
+    def __lt__(self, other): return self._compare(operator.lt, other)
 
     def __float__(self):
         return float(self.sec) + self.frac()
@@ -235,50 +218,21 @@ class taia:
     def pack(self) -> bytes:
         return self._struct.pack(self.sec, self.nano, self.atto)
 
-    def __eq__(self, other):
-        if isinstance(other, taia):
-            return (self.sec, self.nano, self.atto) == (other.sec, other.nano, other.atto)
-        if isinstance(other, tain):
-            return (self.sec, self.nano, self.atto) == (other.sec, other.nano, 0)
-        if isinstance(other, tai):
-            return (self.sec, self.nano, self.atto) == (other.sec, 0, 0)
+    def _tuple(self) -> tuple[int, int, int]:
+        return (self._sec, self._nano, self._atto)
+
+    def _compare(self, op, other) -> bool:
+        typ = type(other)
+        if typ is type(self): return op(self._tuple(), other._tuple())
+        if typ is tain: return op(self._tuple(), (*other._tuple(), 0))
+        if typ is tai: return op(self._tuple(), (*other._tuple(), 0, 0))
         return NotImplemented
 
-    def __le__(self, other):
-        if isinstance(other, taia):
-            return (self.sec, self.nano, self.atto) <= (other.sec, other.nano, other.atto)
-        if isinstance(other, tain):
-            return (self.sec, self.nano, self.atto) <= (other.sec, other.nano, 0)
-        if isinstance(other, tai):
-            return (self.sec, self.nano, self.atto) <= (other.sec, 0, 0)
-        return NotImplemented
-
-    def __lt__(self, other):
-        if isinstance(other, taia):
-            return (self.sec, self.nano, self.atto) < (other.sec, other.nano, other.atto)
-        if isinstance(other, tain):
-            return (self.sec, self.nano, self.atto) < (other.sec, other.nano, 0)
-        if isinstance(other, tai):
-            return (self.sec, self.nano, self.atto) < (other.sec, 0, 0)
-        return NotImplemented
-
-    def __ge__(self, other):
-        if isinstance(other, taia):
-            return (self.sec, self.nano, self.atto) >= (other.sec, other.nano, other.atto)
-        if isinstance(other, tain):
-            return (self.sec, self.nano, self.atto) >= (other.sec, other.nano, 0)
-        if isinstance(other, tai):
-            return (self.sec, self.nano, self.atto) >= (other.sec, 0, 0)
-        return NotImplemented
-
-    def __gt__(self, other):
-        if isinstance(other, taia):
-            return (self.sec, self.nano, self.atto) > (other.sec, other.nano, other.atto)
-        if isinstance(other, tain):
-            return (self.sec, self.nano, self.atto) > (other.sec, other.nano, 0)
-        if isinstance(other, tai):
-            return (self.sec, self.nano, self.atto) > (other.sec, 0, 0)
-        return NotImplemented
+    def __eq__(self, other): return self._compare(operator.eq, other)
+    def __ge__(self, other): return self._compare(operator.ge, other)
+    def __gt__(self, other): return self._compare(operator.gt, other)
+    def __le__(self, other): return self._compare(operator.le, other)
+    def __lt__(self, other): return self._compare(operator.lt, other)
 
     def __float__(self):
         return float(self.sec) + self.frac()
