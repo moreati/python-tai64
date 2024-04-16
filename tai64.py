@@ -75,7 +75,7 @@ class tai:
         return self.sec
 
     def __hash__(self):
-        # TODO Should hash(tai(...)) == hash(taina(..., 0, 0))?
+        # TODO Should hash(tai(...)) == hash(taia(..., 0, 0))?
         return hash((self.__class__, self.sec))
 
     def __repr__(self):
@@ -160,14 +160,14 @@ class tain:
         return float(self.sec) + self.frac()
 
     def __hash__(self):
-        # TODO Should hash(tai(...)) == hash(taina(..., 0, 0))?
+        # TODO Should hash(tai(...)) == hash(taia(..., 0, 0))?
         return hash((self.__class__, self.sec, self.nano))
 
     def __repr__(self):
         return f'{self.__class__.__module__}.{self.__class__.__name__}({self.sec}, {self.nano})'
 
 
-class taina:
+class taia:
     __slots__ = ('_sec', '_nano', '_atto')
     _struct = struct.Struct('>QLL')
     _sec: int
@@ -230,7 +230,7 @@ class taina:
         return self._struct.pack(self.sec, self.nano, self.atto)
 
     def __eq__(self, other):
-        if isinstance(other, taina):
+        if isinstance(other, taia):
             return (self.sec, self.nano, self.atto) == (other.sec, other.nano, other.atto)
         if isinstance(other, tain):
             return (self.sec, self.nano, self.atto) == (other.sec, other.nano, 0)
@@ -239,7 +239,7 @@ class taina:
         return NotImplemented
 
     def __le__(self, other):
-        if isinstance(other, taina):
+        if isinstance(other, taia):
             return (self.sec, self.nano, self.atto) <= (other.sec, other.nano, other.atto)
         if isinstance(other, tain):
             return (self.sec, self.nano, self.atto) <= (other.sec, other.nano, 0)
@@ -248,7 +248,7 @@ class taina:
         return NotImplemented
 
     def __lt__(self, other):
-        if isinstance(other, taina):
+        if isinstance(other, taia):
             return (self.sec, self.nano, self.atto) < (other.sec, other.nano, other.atto)
         if isinstance(other, tain):
             return (self.sec, self.nano, self.atto) < (other.sec, other.nano, 0)
@@ -257,7 +257,7 @@ class taina:
         return NotImplemented
 
     def __ge__(self, other):
-        if isinstance(other, taina):
+        if isinstance(other, taia):
             return (self.sec, self.nano, self.atto) >= (other.sec, other.nano, other.atto)
         if isinstance(other, tain):
             return (self.sec, self.nano, self.atto) >= (other.sec, other.nano, 0)
@@ -266,7 +266,7 @@ class taina:
         return NotImplemented
 
     def __gt__(self, other):
-        if isinstance(other, taina):
+        if isinstance(other, taia):
             return (self.sec, self.nano, self.atto) > (other.sec, other.nano, other.atto)
         if isinstance(other, tain):
             return (self.sec, self.nano, self.atto) > (other.sec, other.nano, 0)
@@ -278,7 +278,7 @@ class taina:
         return float(self.sec) + self.frac()
 
     def __hash__(self):
-        # TODO Should hash(tai(...)) == hash(taina(..., 0, 0))?
+        # TODO Should hash(tai(...)) == hash(taia(..., 0, 0))?
         return hash((self.__class__, self.sec, self.nano, self.atto))
 
     def __repr__(self):
@@ -292,5 +292,5 @@ __all__ = (
     'UNIX_EPOCH',
     tai.__name__,
     tain.__name__,
-    taina.__name__,
+    taia.__name__,
 )
