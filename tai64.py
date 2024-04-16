@@ -5,9 +5,10 @@ from __future__ import annotations
 import binascii
 import struct
 import time
-import typing
 
-if typing.TYPE_CHECKING:
+try:
+    from typing import Self  # type: ignore[attr-defined]
+except ImportError:
     from typing_extensions import Self
 
 EPOCH = 2**62  # 1970-01-01 00:00:00 TAI
