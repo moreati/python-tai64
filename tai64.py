@@ -4,6 +4,12 @@ from __future__ import annotations
 
 import binascii
 import struct
+import types
+
+try:
+    from collections.abc import Buffer  # type: ignore[attr-defined]
+except ImportError:
+    from typing_extensions import Buffer
 
 try:
     from typing import Self  # type: ignore[attr-defined]
@@ -29,12 +35,12 @@ class tai:
         return self
 
     @classmethod
-    def from_hex(cls, s:str|bytes|bytearray|memoryview) -> Self:
+    def from_hex(cls, s:str|Buffer) -> Self:
         buf = binascii.a2b_hex(s[0:cls._struct.size*2])
         return cls.unpack(buf)
 
     @classmethod
-    def unpack(cls, buf:bytes|bytearray|memoryview) -> Self:
+    def unpack(cls, buf:Buffer) -> Self:
         sec, = cls._struct.unpack(buf)
         return cls(sec)
 
@@ -101,7 +107,7 @@ class tain:
         return self
 
     @classmethod
-    def from_hex(cls, s:str|bytes|bytearray|memoryview) -> Self:
+    def from_hex(cls, s:str|Buffer) -> Self:
         buf = binascii.a2b_hex(s[0:cls._struct.size*2])
         return cls.unpack(buf)
 
@@ -110,7 +116,7 @@ class tain:
         return cls(t.sec, 0)
 
     @classmethod
-    def unpack(cls, buf:bytes|bytearray|memoryview) -> Self:
+    def unpack(cls, buf:Buffer) -> Self:
         sec, nano = cls._struct.unpack(buf)
         return cls(sec, nano)
 
@@ -191,7 +197,7 @@ class taia:
         return self
 
     @classmethod
-    def from_hex(cls, s:str|bytes|bytearray|memoryview) -> Self:
+    def from_hex(cls, s:str|Buffer) -> Self:
         buf = binascii.a2b_hex(s[0:cls._struct.size*2])
         return cls.unpack(buf)
 
@@ -204,7 +210,7 @@ class taia:
         return cls(t.sec, t.nano, 0)
 
     @classmethod
-    def unpack(cls, buf:bytes|bytearray|memoryview) -> Self:
+    def unpack(cls, buf:Buffer) -> Self:
         sec, nano, atto = cls._struct.unpack(buf)
         return cls(sec, nano, atto)
 
