@@ -79,6 +79,11 @@ class tai:
         return f'{cls.__module__}.{cls.__name__}({args})'
 
 
+tai.epoch = tai(EPOCH)  # type: ignore[attr-defined]
+tai.min = tai(MIN)  # type: ignore[attr-defined]
+tai.max = tai(MAX)  # type: ignore[attr-defined]
+
+
 class tain(tai):
     __slots__ = ('_nano')
     _struct = struct.Struct('>QL')
@@ -111,6 +116,11 @@ class tain(tai):
         return float(self._sec) + self.frac()
 
 
+tain.epoch = tain(EPOCH, nano=0)  # type: ignore[attr-defined]
+tain.min = tain(MIN, nano=0)  # type: ignore[attr-defined]
+tain.max = tain(MAX, nano=999_999_999)  # type: ignore[attr-defined]
+
+
 class taia(tain):
     __slots__ = ('_atto')
     _struct = struct.Struct('>QLL')
@@ -139,6 +149,11 @@ class taia(tain):
         if typ is tain: return op(self._tuple(), (*other._tuple(), 0))
         if typ is tai: return op(self._tuple(), (*other._tuple(), 0, 0))
         return NotImplemented
+
+
+taia.epoch = taia(EPOCH, nano=0, atto=0)  # type: ignore[attr-defined]
+taia.min = taia(MIN, nano=0, atto=0)  # type: ignore[attr-defined]
+taia.max = taia(MAX, nano=999_999_999, atto=999_999_999)  # type: ignore[attr-defined]
 
 
 __all__ = (
