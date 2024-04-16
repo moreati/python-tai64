@@ -91,10 +91,6 @@ class tain(tai):
             raise ValueError('nano must be in 0..999_999_999', self._nano)
         return self
 
-    @classmethod
-    def from_tai(cls, t:tai) -> Self:
-        return cls(t.sec, 0)
-
     @property
     def nano(self) -> int:
         return self._nano
@@ -126,14 +122,6 @@ class taia(tain):
         if not 0 <= self._atto <= 999_999_999:
             raise ValueError('atto must be in 0..999_999_999', self._atto)
         return self
-
-    @classmethod
-    def from_tai(cls, t:tai) -> Self:
-        return cls(t.sec, 0, 0)
-
-    @classmethod
-    def from_tain(cls, t:tain) -> Self:
-        return cls(t.sec, t.nano, 0)
 
     @property
     def atto(self) -> int:
