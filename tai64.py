@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import binascii
 import struct
-import time
 
 try:
     from typing import Self  # type: ignore[attr-defined]
@@ -33,10 +32,6 @@ class tai:
     def from_hex(cls, s:str|bytes|bytearray|memoryview) -> Self:
         buf = binascii.a2b_hex(s[0:cls._struct.size*2])
         return cls.unpack(buf)
-
-    @classmethod
-    def now(cls) -> Self:
-        return cls(UNIX_EPOCH+int(time.time()))
 
     @classmethod
     def unpack(cls, buf:bytes|bytearray|memoryview) -> Self:
@@ -113,11 +108,6 @@ class tain:
     @classmethod
     def from_tai(cls, t:tai) -> Self:
         return cls(t.sec, 0)
-
-    @classmethod
-    def now(cls) -> Self:
-        sec, nano = divmod(time.time_ns(), 1_000_000_000)
-        return cls(UNIX_EPOCH+sec, nano)
 
     @classmethod
     def unpack(cls, buf:bytes|bytearray|memoryview) -> Self:
@@ -212,11 +202,6 @@ class taina:
     @classmethod
     def from_tain(cls, t:tain) -> Self:
         return cls(t.sec, t.nano, 0)
-
-    @classmethod
-    def now(cls) -> Self:
-        sec, nano = divmod(time.time_ns(), 1_000_000_000)
-        return cls(UNIX_EPOCH+sec, nano, 0)
 
     @classmethod
     def unpack(cls, buf:bytes|bytearray|memoryview) -> Self:
