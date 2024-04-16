@@ -68,7 +68,7 @@ class tai:
     def __lt__(self, other): return self._compare(operator.lt, other)
 
     def __float__(self):
-        return float(self.sec)
+        return float(self._sec)
 
     def __hash__(self):
         return hash((self.__class__, *self._tuple()))
@@ -100,7 +100,7 @@ class tain(tai):
         return self._nano
 
     def frac(self) -> float:
-        return self.nano/1e9
+        return self._nano * 1e-9
 
     def _tuple(self) -> tuple[int, int]:  # type: ignore[override]
         return (self._sec, self._nano)
@@ -112,7 +112,7 @@ class tain(tai):
         return NotImplemented
 
     def __float__(self):
-        return float(self.sec) + self.frac()
+        return float(self._sec) + self.frac()
 
 
 class taia(tain):
@@ -140,7 +140,7 @@ class taia(tain):
         return self._atto
 
     def frac(self) -> float:
-        return self.nano/1e9 + self.atto/1e18
+        return (self._atto * 1e-9 + self._nano) * 1e-9
 
     def _tuple(self) -> tuple[int, int, int]:  # type: ignore[override]
         return (self._sec, self._nano, self._atto)
