@@ -54,6 +54,10 @@ class tai:
         args = self._tuple()
         return self._struct.pack(*args)
 
+    def replace(self, sec:int|None=None) -> Self:
+        if sec is None: sec = self._sec
+        return type(self)(sec)
+
     def _tuple(self) -> tuple[int]:
         return (self._sec,)
 
@@ -103,6 +107,11 @@ class tain(tai):
     def frac(self) -> float:
         return self._nano * 1e-9
 
+    def replace(self, sec:int|None=None, nano:int|None=None) -> Self:
+        if sec is None: sec = self._sec
+        if nano is None: nano = self._nano
+        return type(self)(sec, nano)
+
     def _tuple(self) -> tuple[int, int]:  # type: ignore[override]
         return (self._sec, self._nano)
 
@@ -139,6 +148,12 @@ class taia(tain):
 
     def frac(self) -> float:
         return (self._atto * 1e-9 + self._nano) * 1e-9
+
+    def replace(self, sec:int|None=None, nano:int|None=None, atto:int|None=None) -> Self:
+        if sec is None: sec = self._sec
+        if nano is None: nano = self._nano
+        if atto is None: atto = self._atto
+        return type(self)(sec, nano, atto)
 
     def _tuple(self) -> tuple[int, int, int]:  # type: ignore[override]
         return (self._sec, self._nano, self._atto)
