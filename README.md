@@ -70,7 +70,6 @@ tai64.taia(4611686018926525504, 1193046, 11259375)
 - Unit tests
 - PyPI package
 - Docstrings
-- License
 - Decide: should `tai()` take raw unsigned int (current behaviour) or offset from epoch (`time.time()` behaviour)
 - Decide and implement exceptions hierarchy
 - Decide and implement `str()` behaviour

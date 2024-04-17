@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tai64"
+version = "0.0.1"
+authors = [
+    {name="Alex Willmer", email="alex@moreati.org.uk"},
+]
+description = "TAI64, TAI64N, TAI64NA implementations for Python"
+readme = "README.md"
+dependencies = [
+    "typing-extensions>=4.6; python_version < '3.12'",
+]
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: System :: Networking :: Time Synchronization",
+    "Typing :: Typed",
+]
+keywords = [
+    "libtai",
+    "tai64",
+    "tai64n",
+    "tai64na",
+    "taia",
+    "tai",
+    "time",
+]
+
+[tool.setuptools]
+py-modules = [
+    "tai64",
+]
+
+[project.urls]
+Homepage = "https://github.com/moreati/python-tai64"
+Issues = "https://github.com/moreati/python-tai64/issues"
