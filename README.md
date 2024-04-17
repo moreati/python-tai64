@@ -17,28 +17,51 @@ They have well known serialisations to bytes or hexadecimal.
 
 ## Usage
 
+The epoch for TAI64 is 1970-01-01 00:00:00 TAI, this is assigned the integer value 2**62.
+
 ```pycon
 >>> import tai64
->>> tai64.tai(sec=tai64.EPOCH)  # TAI64 epoch is 1970-01-01 00:00:00 TAI
+>>> tai64.tai(sec=tai64.EPOCH)
 tai64.tai(4611686018427387904)
->>> tai64.tai(sec=tai64.UNIX_EPOCH)  # UNIX epoch is 10 seconds later
+```
+
+The epoch for UNIX is 1970-01-01 00:00:10 TAI. At the time UTC was offset
+from TAI by 10 leapseconds.
+
+```pycon
+>>> tai64.tai(sec=tai64.UNIX_EPOCH)
 tai64.tai(4611686018427387914)
->>> t = tai64.tai.now()
->>> t
-tai64.tai(4611686020113283116)
->>> t.pack()
-b'@\x00\x00\x00d|\xb8,'
->>> t.hex()
-'40000000647cb82c'
->>> t == tai64.tai.unpack(t.pack())
-True
->>> t == tai64.tai.from_hex(t.hex())
-True
->>> t2 = tai64.taina.now()
->>> t2
-tai64.taina(4611686020113284055, 314132000, 0)
->>> t2.hex()
-'40000000647cbbd712b9462000000000'
+```
+
+To deserialise a TAI64, TAI64N, or TAI64NA call the `from_hex()` or
+`unpack()` class method.
+
+```pycon
+>>> tai64.tai.from_hex('400000001dc03c40')
+tai64.tai(4611686018926525504)
+>>> tai64.tai.unpack(b'@\x00\x00\x00\x1d\xc0<@')
+tai64.tai(4611686018926525504)
+```
+
+To serialise call the `hex()` or `pack()` method
+
+```pycon
+>>> tai64.tai(4611686018926525504).hex()
+'400000001dc03c40'
+>>> tai64.tai(4611686018926525504).pack()
+b'@\x00\x00\x00\x1d\xc0<@'
+```
+
+For nanosecond precision (9 decimal places) use `tai64.tain()`,
+or for attosecond (18 decimal places) use `tai64.taia()`.
+
+```pycon
+>>> tai64.tain(4611686018926525504, nano=123).hex()
+'400000001dc03c400000007b'
+>>> tai64.taia(4611686018926525504, nano=1193046, atto=11259375).hex()
+'400000001dc03c400012345600abcdef'
+>>> tai64.taia.unpack(b'@\x00\x00\x00\x1d\xc0<@\x00\x124V\x00\xab\xcd\xef')
+tai64.taia(4611686018926525504, 1193046, 11259375)
 ```
 
 ## TODO
@@ -49,8 +72,6 @@ tai64.taina(4611686020113284055, 314132000, 0)
 - Docstrings
 - License
 - Decide: should `tai()` take raw unsigned int (current behaviour) or offset from epoch (`time.time()` behaviour)
-- Decide `tai()` vs `tai64()`
-- Decide `hash()` behaviour (should `hash(tain(i, 0)) == hash(tai(i)) == hash(i)`)
 - Decide and implement exceptions hierarchy
 - Decide and implement `str()` behaviour
 - Decide and implement `format()` behaviour
