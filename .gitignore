@@ -1,0 +1,12 @@
+__pycache__/
+.hypothesis/
+.mypy_cache/
+.pytest_cache/
+.tox/
+*.egg-info/
+*.pyc
+*.pyd
+*.pyo
+build/
+dist/
+MANIFEST
