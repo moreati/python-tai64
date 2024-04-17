@@ -67,7 +67,6 @@ tai64.taia(4611686018926525504, 1193046, 11259375)
 ## TODO
 
 - Implement TAI64 <-> UTC
-- Unit tests
 - PyPI package
 - Docstrings
 - Decide: should `tai()` take raw unsigned int (current behaviour) or offset from epoch (`time.time()` behaviour)
