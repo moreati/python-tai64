@@ -78,6 +78,13 @@ tai64.taia(4611686018926525504, 1193046, 11259375)
 - Decide arithmatic behaviour
 - Investigate `CLOCK_TAI`
 
+## Other implementations
+
+- [libtai] original C implementation, by D. J. Bernstein.
+- [Python tai64n]
+- [Python taiconverter]
+- [Rust tai64]
+
 ## Further Reading
 - https://en.wikipedia.org/wiki/International_Atomic_Time
 - https://cr.yp.to/proto/utctai.html
@@ -86,3 +93,6 @@ tai64.taia(4611686018926525504, 1193046, 11259375)
 
 [TAI]: https://en.wikipedia.org/wiki/International_Atomic_Time
 [libtai]: https://cr.yp.to/libtai.html
+[Python tai64n]: https://pypi.org/project/tai64n/
+[Python taiconverter]: https://pypi.org/project/tai64converter/
+[Rust tai64]: https://docs.rs/tai64/latest/tai64/
