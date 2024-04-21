@@ -48,6 +48,10 @@ class tai:
     def sec(self) -> int:
         return self._sec
 
+    @property
+    def size(self) -> int:
+        return self._struct.size
+
     def hex(self) -> str:
         return self.pack().hex()
 

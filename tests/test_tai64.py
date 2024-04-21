@@ -80,6 +80,8 @@ class TestTai:
         t = tai64.tai(1234)
         assert t.sec == 1234
         assert type(t.sec) is int
+        assert t.size == 8
+        assert type(t.size) is int
 
     @pytest.mark.parametrize(['buf', 'sec', 'isofmt'], TAI64_LABELS_HEX)
     def test_hex(self, buf, sec, isofmt):
@@ -90,6 +92,7 @@ class TestTai:
     def test_pack(self, buf, sec, isofmt):
         t = tai64.tai(sec)
         assert t.pack() == buf
+        assert t.size == len(buf)
 
     def test_replace(self):
         t = tai64.tai(1234)
@@ -184,6 +187,8 @@ class TestTain:
         assert t.nano == 2345
         assert type(t.sec) is int
         assert type(t.nano) is int
+        assert t.size == 12
+        assert type(t.size) is int
 
     @pytest.mark.parametrize(['buf', 'sec', 'nano', 'isofmt'], TAI64N_LABELS_HEX)
     def test_hex(self, buf, sec, nano, isofmt):
@@ -199,6 +204,7 @@ class TestTain:
     def test_pack(self, buf, sec, nano, isofmt):
         t = tai64.tain(sec, nano)
         assert t.pack() == buf
+        assert t.size == len(buf)
 
     def test_replace(self):
         t = tai64.tain(1234, 2345)
@@ -333,6 +339,8 @@ class TestTaia:
         assert type(t.sec) is int
         assert type(t.nano) is int
         assert type(t.atto) is int
+        assert t.size == 16
+        assert type(t.size) is int
 
     @pytest.mark.parametrize(['buf', 'sec', 'nano', 'atto', 'isofmt'], TAI64NA_LABELS_HEX)
     def test_hex(self, buf, sec, nano, atto, isofmt):
@@ -348,6 +356,7 @@ class TestTaia:
     def test_pack(self, buf, sec, nano, atto, isofmt):
         t = tai64.taia(sec, nano, atto)
         assert t.pack() == buf
+        assert t.size == len(buf)
 
     def test_replace(self):
         t = tai64.taia(1234, 2345, 3456)
