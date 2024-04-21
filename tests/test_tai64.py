@@ -134,12 +134,12 @@ class TestTain:
         assert tai64.tain(1234, 999_999_999)
 
     @pytest.mark.parametrize('sec', INVALID_SEC_VALS)
-    def test_constructor_invalid_sec(self, sec):
+    def test_constructor_invalid_sec_val(self, sec):
         with pytest.raises(ValueError):
             tai64.tain(sec, 0)
 
     @pytest.mark.parametrize('nano', INVALID_NANO_VALS)
-    def test_constructor_invalid_sec(self, nano):
+    def test_constructor_invalid_nano_val(self, nano):
         with pytest.raises(ValueError):
             tai64.tain(123, nano)
 
@@ -258,17 +258,17 @@ class TestTaia:
         assert tai64.taia(1234, 999_999_999, 999_999_999)
 
     @pytest.mark.parametrize('sec', INVALID_SEC_VALS)
-    def test_constructor_invalid_sec(self, sec):
+    def test_constructor_invalid_sec_val(self, sec):
         with pytest.raises(ValueError):
             tai64.taia(sec, 0, 0)
 
     @pytest.mark.parametrize('nano', INVALID_NANO_VALS)
-    def test_constructor_invalid_sec(self, nano):
+    def test_constructor_invalid_nano_val(self, nano):
         with pytest.raises(ValueError):
             tai64.taia(123, nano, 0)
 
-    @pytest.mark.parametrize('atto', INVALID_NANO_VALS)
-    def test_constructor_invalid_sec(self, atto):
+    @pytest.mark.parametrize('atto', INVALID_ATTO_VALS)
+    def test_constructor_invalid_atto_val(self, atto):
         with pytest.raises(ValueError):
             tai64.taia(123, 0, atto)
 
