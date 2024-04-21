@@ -5,6 +5,7 @@ from __future__ import annotations
 import binascii
 import operator
 import struct
+from typing import SupportsIndex
 
 try:
     from collections.abc import Buffer  # type: ignore[attr-defined]
@@ -26,9 +27,9 @@ class tai:
     _struct = struct.Struct('>Q')
     _sec: int
 
-    def __new__(cls, sec:int):
+    def __new__(cls, sec:SupportsIndex):
         self = object.__new__(cls)
-        self._sec = int(sec)
+        self._sec = operator.index(sec)
         if not MIN <= self._sec <= MAX:
             raise ValueError('sec must be in 0..2**63-1', self._sec)
         return self
@@ -93,9 +94,9 @@ class tain(tai):
     _struct = struct.Struct('>QL')
     _nano: int
 
-    def __new__(cls, sec:int, nano:int):
+    def __new__(cls, sec:SupportsIndex, nano:SupportsIndex):
         self = super().__new__(cls, sec)
-        self._nano = int(nano)
+        self._nano = operator.index(nano)
         if not 0 <= self._nano <= 999_999_999:
             raise ValueError('nano must be in 0..999_999_999', self._nano)
         return self
@@ -135,9 +136,9 @@ class taia(tain):
     _struct = struct.Struct('>QLL')
     _atto: int
 
-    def __new__(cls, sec:int, nano:int, atto:int):
+    def __new__(cls, sec:SupportsIndex, nano:SupportsIndex, atto:SupportsIndex):
         self = super().__new__(cls, sec, nano)
-        self._atto = int(atto)
+        self._atto = operator.index(atto)
         if not 0 <= self._atto <= 999_999_999:
             raise ValueError('atto must be in 0..999_999_999', self._atto)
         return self

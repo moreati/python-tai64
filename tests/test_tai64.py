@@ -5,6 +5,13 @@ import pytest
 import tai64
 
 
+INVALID_SEC_TYPES = [
+    None,
+    1.0,
+    '1',
+]
+
+
 INVALID_SEC_VALS = [
     -1,
     2**63,
@@ -48,6 +55,11 @@ class TestTai:
         assert tai64.tai(0)
         assert tai64.tai(1234)
         assert tai64.tai(2**63-1)
+
+    @pytest.mark.parametrize('sec', INVALID_SEC_TYPES)
+    def test_constructor_invalid_type(self, sec):
+        with pytest.raises(TypeError):
+            tai64.tai(sec)
 
     @pytest.mark.parametrize('sec', INVALID_SEC_VALS)
     def test_constructor_invalid_val(self, sec):
@@ -109,6 +121,7 @@ class TestTai:
         assert tai64.tai.max.sec == 0x7fffffffffffffff
 
 
+INVALID_NANO_TYPES = INVALID_SEC_TYPES
 INVALID_NANO_VALS = [
     -1,
     1_000_000_000,
@@ -132,6 +145,16 @@ class TestTain:
         assert tai64.tain(1234, 0)
         assert tai64.tain(1234, 2345)
         assert tai64.tain(1234, 999_999_999)
+
+    @pytest.mark.parametrize('sec', INVALID_SEC_TYPES)
+    def test_constructor_invalid_sec_type(self, sec):
+        with pytest.raises(TypeError):
+            tai64.tain(sec)
+
+    @pytest.mark.parametrize('nano', INVALID_NANO_TYPES)
+    def test_constructor_invalid_nano_type(self, nano):
+        with pytest.raises(TypeError):
+            tai64.tain(123, nano)
 
     @pytest.mark.parametrize('sec', INVALID_SEC_VALS)
     def test_constructor_invalid_sec_val(self, sec):
@@ -231,6 +254,7 @@ class TestTain:
         assert tai64.tain.max.nano == 999_999_999
 
 
+INVALID_ATTO_TYPES = INVALID_SEC_TYPES
 INVALID_ATTO_VALS = INVALID_NANO_VALS
 
 TAI64NA_LABELS_HEX = [
@@ -256,6 +280,21 @@ class TestTaia:
         assert tai64.taia(1234, 0, 0)
         assert tai64.taia(1234, 2345, 3456)
         assert tai64.taia(1234, 999_999_999, 999_999_999)
+
+    @pytest.mark.parametrize('sec', INVALID_SEC_TYPES)
+    def test_constructor_invalid_sec_type(self, sec):
+        with pytest.raises(TypeError):
+            tai64.taia(sec, 0, 0)
+
+    @pytest.mark.parametrize('nano', INVALID_NANO_TYPES)
+    def test_constructor_invalid_nano_type(self, nano):
+        with pytest.raises(TypeError):
+            tai64.taia(123, nano, 0)
+
+    @pytest.mark.parametrize('atto', INVALID_ATTO_TYPES)
+    def test_constructor_invalid_atto_type(self, atto):
+        with pytest.raises(TypeError):
+            tai64.taia(123, 0, atto)
 
     @pytest.mark.parametrize('sec', INVALID_SEC_VALS)
     def test_constructor_invalid_sec_val(self, sec):
