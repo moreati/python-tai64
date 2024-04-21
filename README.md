@@ -2,11 +2,11 @@
 
 TAI64, TAI64N, TAI64NA implementations for Python.
 
-International Atomic Time (TAI) is the basic standard for measuring time.
+[International Atomic Time (TAI)][TAI] is the basic standard for measuring time.
 Universal Coordinated Time (UTC) is derived from TAI by adding or subtracting
 leap seconds according to the measured rotation speed of the Earth.
 
-TAI64 is a family of formats for TAI times, first implemented in libtai.
+TAI64 is a family of formats for TAI times, first implemented in [libtai].
 They have well known serialisations to bytes or hexadecimal.
 
 | Format  | Bytes |         Resolution       |       Range       |
@@ -83,3 +83,6 @@ tai64.taia(4611686018926525504, 1193046, 11259375)
 - https://cr.yp.to/proto/utctai.html
 - https://cr.yp.to/libtai/tai64.html
 - https://cr.yp.to/libtai.html
+
+[TAI]: https://en.wikipedia.org/wiki/International_Atomic_Time
+[libtai]: https://cr.yp.to/libtai.html
