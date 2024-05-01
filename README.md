@@ -6,7 +6,7 @@ TAI64, TAI64N, TAI64NA implementations for Python.
 Universal Coordinated Time (UTC) is derived from TAI by adding or subtracting
 leap seconds according to the measured rotation speed of the Earth.
 
-TAI64 is a family of formats for TAI times, first implemented in [libtai].
+[TAI64] is a family of formats for TAI times, first implemented in [libtai].
 They have well known serialisations to bytes or hexadecimal.
 
 | Format  | Bytes |         Resolution       |       Range       |
@@ -72,7 +72,12 @@ tai64.taia(4611686018926525504, 1193046, 11259375)
 
 ## Other implementations
 
+- [calends] for Go, C/C++, Dart, Javascript, WASM, and PHP
+- [Go cactus/tai64]
+- [Go paulhammond/tai64]
+- [Javascript tai64]
 - [libtai] original C implementation, by D. J. Bernstein.
+- [Perl Time::TAI64]
 - [Python tai64n]
 - [Python taiconverter]
 - [Rust tai64]
@@ -85,7 +90,13 @@ tai64.taia(4611686018926525504, 1193046, 11259375)
 - https://cr.yp.to/libtai.html
 
 [TAI]: https://en.wikipedia.org/wiki/International_Atomic_Time
+[TAI64]: https://cr.yp.to/libtai/tai64.html
+[calends]: https://calends.readthedocs.io/en/latest/
+[Go cactus/tai64]: https://github.com/cactus/tai64
+[Go paulhammond/tai64]: https://github.com/paulhammond/tai64
+[Javascript tai64]: https://www.npmjs.com/package/tai64
 [libtai]: https://cr.yp.to/libtai.html
+[Perl Time::TAI64]: https://metacpan.org/pod/Time::TAI64
 [Python tai64n]: https://pypi.org/project/tai64n/
 [Python taiconverter]: https://pypi.org/project/tai64converter/
 [Rust tai64]: https://docs.rs/tai64/latest/tai64/
