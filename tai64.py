@@ -59,7 +59,7 @@ class tai:
         args = self._tuple()
         return self._struct.pack(*args)
 
-    def replace(self, sec:int|None=None) -> Self:
+    def replace(self, sec:SupportsIndex|None=None) -> Self:
         if sec is None: sec = self._sec
         return type(self)(sec)
 
@@ -112,7 +112,7 @@ class tain(tai):
     def frac(self) -> float:
         return self._nano * 1e-9
 
-    def replace(self, sec:int|None=None, nano:int|None=None) -> Self:
+    def replace(self, sec:SupportsIndex|None=None, nano:SupportsIndex|None=None) -> Self:
         if sec is None: sec = self._sec
         if nano is None: nano = self._nano
         return type(self)(sec, nano)
@@ -154,7 +154,7 @@ class taia(tain):
     def frac(self) -> float:
         return (self._atto * 1e-9 + self._nano) * 1e-9
 
-    def replace(self, sec:int|None=None, nano:int|None=None, atto:int|None=None) -> Self:
+    def replace(self, sec:SupportsIndex|None=None, nano:SupportsIndex|None=None, atto:SupportsIndex|None=None) -> Self:
         if sec is None: sec = self._sec
         if nano is None: nano = self._nano
         if atto is None: atto = self._atto
