@@ -20,7 +20,6 @@ except ImportError:
 EPOCH = 2**62  # 1970-01-01 00:00:00 TAI
 MIN = 0
 MAX = 2**63 - 1
-UNIX_EPOCH = EPOCH + 10  # 1970-01-01 00:00:10 TAI <-> 1970-01-01 00:00:00 UTC
 
 class tai:
     __slots__ = ('_sec')
@@ -180,7 +179,6 @@ __all__ = (
     'EPOCH',
     'MIN',
     'MAX',
-    'UNIX_EPOCH',
     tai.__name__,
     tain.__name__,
     taia.__name__,

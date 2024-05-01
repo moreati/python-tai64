@@ -25,14 +25,6 @@ The epoch for TAI64 is 1970-01-01 00:00:00 TAI, this is assigned the integer val
 tai64.tai(4611686018427387904)
 ```
 
-The epoch for UNIX is 1970-01-01 00:00:10 TAI. At the time UTC was offset
-from TAI by 10 leapseconds.
-
-```pycon
->>> tai64.tai(sec=tai64.UNIX_EPOCH)
-tai64.tai(4611686018427387914)
-```
-
 To deserialise a TAI64, TAI64N, or TAI64NA call the `from_hex()` or
 `unpack()` class method.
 
