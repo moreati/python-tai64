@@ -1,1 +1,2 @@
+include tai64/py.typed
 include tests/*.py
