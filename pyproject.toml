@@ -34,7 +34,7 @@ keywords = [
 ]
 
 [tool.setuptools]
-py-modules = [
+packages = [
     "tai64",
 ]
 
