@@ -86,6 +86,9 @@ class tai:
         args = ', '.join(f'{arg}' for arg in self._tuple())
         return f'{cls.__module__}.{cls.__name__}({args})'
 
+    def __str__(self):
+        return f'{self._sec}'
+
 
 tai.epoch = tai(EPOCH)  # type: ignore[attr-defined]
 tai.min = tai(MIN)  # type: ignore[attr-defined]
@@ -128,6 +131,10 @@ class tain(tai):
     def __float__(self):
         return float(self._sec) + self.frac()
 
+    def __str__(self):
+        if self._nano: return f'{self._sec}.{self._nano:>09}'
+        return f'{self._sec}.0'
+
 
 tain.epoch = tain(EPOCH, nano=0)  # type: ignore[attr-defined]
 tain.min = tain(MIN, nano=0)  # type: ignore[attr-defined]
@@ -168,6 +175,11 @@ class taia(tain):
         if typ is tain: return op(self._tuple(), (*other._tuple(), 0))
         if typ is tai: return op(self._tuple(), (*other._tuple(), 0, 0))
         return NotImplemented
+
+    def __str__(self):
+        if self._atto: return f'{self._sec}.{self._nano:>09}{self._atto:>09}'
+        if self._nano: return f'{self._sec}.{self._nano:>09}'
+        return f'{self._sec}.0'
 
 
 taia.epoch = taia(EPOCH, nano=0, atto=0)  # type: ignore[attr-defined]

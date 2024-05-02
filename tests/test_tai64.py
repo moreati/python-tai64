@@ -118,6 +118,12 @@ class TestTai:
         t = tai64.tai(1234)
         assert repr(t) == 'tai64.tai(1234)'
 
+    def test_str(self):
+        assert str(tai64.tai(0)) == '0'
+        assert str(tai64.tai(1)) == '1'
+        assert str(tai64.tai(tai64.EPOCH)) == '4611686018427387904'
+        assert str(tai64.tai.max) == '9223372036854775807'
+
     def test_constants(self):
         assert tai64.tai.epoch.sec == 0x4000000000000000
         assert tai64.tai.min.sec == 0
@@ -250,6 +256,13 @@ class TestTain:
     def test_repr(self):
         t = tai64.tain(1234, 2345)
         assert repr(t) == 'tai64.tain(1234, 2345)'
+
+    def test_str(self):
+        assert str(tai64.tain(0, 0)) == '0.0'
+        assert str(tai64.tain(0, 1)) == '0.000000001'
+        assert str(tai64.tain(1, 2)) == '1.000000002'
+        assert str(tai64.tain(tai64.EPOCH, 123456789)) == '4611686018427387904.123456789'
+        assert str(tai64.tain.max) == '9223372036854775807.999999999'
 
     def test_constants(self):
         assert tai64.tain.epoch.sec == 0x4000000000000000
@@ -426,6 +439,15 @@ class TestTaia:
     def test_repr(self):
         t = tai64.taia(1234, 2345, 3456)
         assert repr(t) == 'tai64.taia(1234, 2345, 3456)'
+
+    def test_str(self):
+        assert str(tai64.taia(0, 0, 0)) == '0.0'
+        assert str(tai64.taia(0, 0, 1)) == '0.000000000000000001'
+        assert str(tai64.taia(0, 1, 2)) == '0.000000001000000002'
+        assert str(tai64.taia(1, 2, 3)) == '1.000000002000000003'
+        assert str(tai64.taia(tai64.EPOCH, 123456789, 987654321)) == '4611686018427387904.123456789987654321'
+        assert str(tai64.taia.max) == '9223372036854775807.999999999999999999'
+
 
     def test_constants(self):
         assert tai64.taia.epoch.sec == 0x4000000000000000
