@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tai64"
-version = "0.0.1"
+version = "0.0.2dev"
 authors = [
     {name="Alex Willmer", email="alex@moreati.org.uk"},
 ]
