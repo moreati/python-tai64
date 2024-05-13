@@ -5,6 +5,7 @@ from __future__ import annotations
 import binascii
 import operator
 import struct
+from typing import ClassVar
 from typing import SupportsIndex
 
 try:
@@ -25,6 +26,10 @@ class tai:
     __slots__ = ('_sec')
     _struct = struct.Struct('>Q')
     _sec: int
+
+    epoch: ClassVar[Self]
+    min: ClassVar[Self]
+    max: ClassVar[Self]
 
     def __new__(cls, sec:SupportsIndex):
         self = object.__new__(cls)
@@ -90,9 +95,9 @@ class tai:
         return f'{self._sec}'
 
 
-tai.epoch = tai(EPOCH)  # type: ignore[attr-defined]
-tai.min = tai(MIN)  # type: ignore[attr-defined]
-tai.max = tai(MAX)  # type: ignore[attr-defined]
+tai.epoch = tai(EPOCH)
+tai.min = tai(MIN)
+tai.max = tai(MAX)
 
 
 class tain(tai):
@@ -136,9 +141,9 @@ class tain(tai):
         return f'{self._sec}.0'
 
 
-tain.epoch = tain(EPOCH, nano=0)  # type: ignore[attr-defined]
-tain.min = tain(MIN, nano=0)  # type: ignore[attr-defined]
-tain.max = tain(MAX, nano=999_999_999)  # type: ignore[attr-defined]
+tain.epoch = tain(EPOCH, nano=0)
+tain.min = tain(MIN, nano=0)
+tain.max = tain(MAX, nano=999_999_999)
 
 
 class taia(tain):
@@ -182,9 +187,9 @@ class taia(tain):
         return f'{self._sec}.0'
 
 
-taia.epoch = taia(EPOCH, nano=0, atto=0)  # type: ignore[attr-defined]
-taia.min = taia(MIN, nano=0, atto=0)  # type: ignore[attr-defined]
-taia.max = taia(MAX, nano=999_999_999, atto=999_999_999)  # type: ignore[attr-defined]
+taia.epoch = taia(EPOCH, nano=0, atto=0)
+taia.min = taia(MIN, nano=0, atto=0)
+taia.max = taia(MAX, nano=999_999_999, atto=999_999_999)
 
 
 __all__ = (
